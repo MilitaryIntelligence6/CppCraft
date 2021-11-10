@@ -978,9 +978,12 @@ void light_fill(
 }
 
 void compute_chunk(WorkerItem *item) {
-    char *opaque = (char *) calloc(XZ_SIZE * XZ_SIZE * Y_SIZE, sizeof(char));
-    char *light = (char *) calloc(XZ_SIZE * XZ_SIZE * Y_SIZE, sizeof(char));
-    char *highest = (char *) calloc(XZ_SIZE * XZ_SIZE, sizeof(char));
+//    char *opaque = (char *) calloc(XZ_SIZE * XZ_SIZE * Y_SIZE, sizeof(char));
+//    char *light = (char *) calloc(XZ_SIZE * XZ_SIZE * Y_SIZE, sizeof(char));
+//    char *highest = (char *) calloc(XZ_SIZE * XZ_SIZE, sizeof(char));
+    char *opaque = new char[XZ_SIZE * XZ_SIZE * Y_SIZE];
+    char *light = new char[XZ_SIZE * XZ_SIZE * Y_SIZE];
+    char *highest = new char[XZ_SIZE * XZ_SIZE];
 
     int ox = item->p * CHUNK_SIZE - CHUNK_SIZE - 1;
     int oy = -1;

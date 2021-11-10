@@ -15,7 +15,8 @@ DataStruct::CppSign::~CppSign() {
 void DataStruct::CppSign::sign_list_alloc(SignList *list, int capacity) {
     list->capacity = capacity;
     list->size = 0;
-    list->data = (Sign *) calloc(capacity, sizeof(Sign));
+//    list->data = (Sign *) calloc(capacity, sizeof(Sign));
+    list->data = new Sign[capacity];
 }
 
 void DataStruct::CppSign::sign_list_free(SignList *list) {

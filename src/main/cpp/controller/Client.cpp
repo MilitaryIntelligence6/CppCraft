@@ -239,7 +239,8 @@ void Controller::Client::client_start() {
         return;
     }
     running = 1;
-    queue = (char *)calloc(QUEUE_SIZE, sizeof(char));
+//    queue = (char *)calloc(QUEUE_SIZE, sizeof(char));
+    queue = new char[QUEUE_SIZE];
     qsize = 0;
     mtx_init(&mutex, mtx_plain);
     if (thrd_create(&recv_thread, recv_worker, NULL) != thrd_success) {

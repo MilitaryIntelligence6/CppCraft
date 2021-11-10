@@ -63,7 +63,8 @@ void Scene::WorldMap::map_grow(Map *map) {
     new_map.dz = map->dz;
     new_map.mask = (map->mask << 1) | 1;
     new_map.size = 0;
-    new_map.data = (MapEntry *)calloc(new_map.mask + 1, sizeof(MapEntry));
+//    new_map.data = (MapEntry *)calloc(new_map.mask + 1, sizeof(MapEntry));
+    new_map.data = new MapEntry[new_map.mask + 1];
     MAP_FOR_EACH(map, ex, ey, ez, ew) {
         map_set(&new_map, ex, ey, ez, ew);
     } END_MAP_FOR_EACH;

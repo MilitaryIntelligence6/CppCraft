@@ -130,7 +130,8 @@ void flip_image_vertical(
         unsigned char *data, unsigned int width, unsigned int height) {
     unsigned int size = width * height * 4;
     unsigned int stride = sizeof(char) * width * 4;
-    unsigned char *new_data = static_cast<unsigned char *>(malloc(sizeof(unsigned char) * size));
+//    unsigned char *new_data = static_cast<unsigned char *>(malloc(sizeof(unsigned char) * size));
+    unsigned char *new_data = new unsigned char[size];
     for (unsigned int i = 0; i < height; i++) {
         unsigned int j = height - i - 1;
         memcpy(new_data + j * stride, data + i * stride, stride);
@@ -199,7 +200,8 @@ int Util::Utility::string_width(const char *input) {
 
 int Util::Utility::wrap(const char *input, int max_width, char *output, int max_length) {
     *output = '\0';
-    char *text = static_cast<char *>(malloc(sizeof(char) * (strlen(input) + 1)));
+//    char *text = static_cast<char *>(malloc(sizeof(char) * (strlen(input) + 1)));
+    char *text = new char[strlen(input) + 1];
     strcpy(text, input);
     int space_width = char_width(' ');
     int line_number = 0;

@@ -17,7 +17,8 @@ void Entity::CppRing::ring_alloc(Ring *ring, int capacity) {
     ring->capacity = capacity;
     ring->start = 0;
     ring->end = 0;
-    ring->data = (RingEntry *)calloc(capacity, sizeof(RingEntry));
+//    ring->data = (RingEntry *)calloc(capacity, sizeof(RingEntry));
+    ring->data = new RingEntry[capacity];
 }
 
 void Entity::CppRing::ring_free(Ring *ring) {
