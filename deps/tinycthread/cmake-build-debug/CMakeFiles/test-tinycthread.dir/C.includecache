@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../source/tinycthread.h
+time.h
+-
+pthread.h
+-
+windows.h
+-
+
+/Users/javaman/ProgramFiles/develop/lib/cpp/thread/tinycthread/test/test.c
+stdio.h
+-
+tinycthread.h
+-
+assert.h
+-
+stdlib.h
+-
+limits.h
+-
+time.h
+-
+string.h
+-
+unistd.h
+-
+strings.h
+-
+

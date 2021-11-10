@@ -1,0 +1,5 @@
+/Users/javaman/ProgramFiles/develop/lib/cpp/thread/tinycthread/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/javaman/ProgramFiles/develop/lib/cpp/thread/tinycthread/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/javaman/ProgramFiles/develop/lib/cpp/thread/tinycthread/cmake-build-debug/CMakeFiles/test.dir
+/Users/javaman/ProgramFiles/develop/lib/cpp/thread/tinycthread/cmake-build-debug/CMakeFiles/test-tinycthread.dir
+/Users/javaman/ProgramFiles/develop/lib/cpp/thread/tinycthread/cmake-build-debug/CMakeFiles/tinycthread.dir
