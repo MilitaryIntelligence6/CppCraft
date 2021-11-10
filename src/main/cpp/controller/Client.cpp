@@ -152,7 +152,7 @@ void Controller::Client::client_talk(const char *text) {
 
 char *Controller::Client::client_recv() {
     if (!client_enabled) {
-        return 0;
+        return nullptr;
     }
     char *result = nullptr;
     mtx_lock(&mutex);
@@ -260,7 +260,8 @@ void Controller::Client::client_stop() {
     // }
     // mtx_destroy(&mutex);
     qsize = 0;
-    free(queue);
+//    free(queue);
+    delete queue;
     // printf("Bytes Sent: %d, Bytes Received: %d\n",
     //     bytes_sent, bytes_received);
 }

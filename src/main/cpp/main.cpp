@@ -171,7 +171,7 @@ float time_of_day() {
     float t;
     t = glfwGetTime();
     t = t / g->day_length;
-    t = t - (int)t;
+    t = t - (int) t;
     return t;
 }
 
@@ -180,8 +180,7 @@ float get_daylight() {
     if (timer < 0.5) {
         float t = (timer - 0.25) * 100;
         return 1 / (1 + powf(2, -t));
-    }
-    else {
+    } else {
         float t = (timer - 0.85) * 100;
         return 1 - 1 / (1 + powf(2, -t));
     }
@@ -207,7 +206,9 @@ void get_sight_vector(float rx, float ry, float *vx, float *vy, float *vz) {
 
 void get_motion_vector(int flying, int sz, int sx, float rx, float ry,
                        float *vx, float *vy, float *vz) {
-    *vx = 0; *vy = 0; *vz = 0;
+    *vx = 0;
+    *vy = 0;
+    *vz = 0;
     if (!sz && !sx) {
         return;
     }
@@ -227,8 +228,7 @@ void get_motion_vector(int flying, int sz, int sx, float rx, float ry,
         *vx = cosf(rx + strafe) * m;
         *vy = y;
         *vz = sinf(rx + strafe) * m;
-    }
-    else {
+    } else {
         *vx = cosf(rx + strafe);
         *vy = 0;
         *vz = sinf(rx + strafe);
@@ -305,9 +305,9 @@ void draw_triangles_3d_ao(Attrib *attrib, GLuint buffer, int count) {
     glVertexAttribPointer(attrib->position, 3, GL_FLOAT, GL_FALSE,
                           sizeof(GLfloat) * 10, 0);
     glVertexAttribPointer(attrib->normal, 3, GL_FLOAT, GL_FALSE,
-                          sizeof(GLfloat) * 10, (GLvoid *)(sizeof(GLfloat) * 3));
+                          sizeof(GLfloat) * 10, (GLvoid *) (sizeof(GLfloat) * 3));
     glVertexAttribPointer(attrib->uv, 4, GL_FLOAT, GL_FALSE,
-                          sizeof(GLfloat) * 10, (GLvoid *)(sizeof(GLfloat) * 6));
+                          sizeof(GLfloat) * 10, (GLvoid *) (sizeof(GLfloat) * 6));
     glDrawArrays(GL_TRIANGLES, 0, count);
     glDisableVertexAttribArray(attrib->position);
     glDisableVertexAttribArray(attrib->normal);
@@ -322,7 +322,7 @@ void draw_triangles_3d_text(Attrib *attrib, GLuint buffer, int count) {
     glVertexAttribPointer(attrib->position, 3, GL_FLOAT, GL_FALSE,
                           sizeof(GLfloat) * 5, 0);
     glVertexAttribPointer(attrib->uv, 2, GL_FLOAT, GL_FALSE,
-                          sizeof(GLfloat) * 5, (GLvoid *)(sizeof(GLfloat) * 3));
+                          sizeof(GLfloat) * 5, (GLvoid *) (sizeof(GLfloat) * 3));
     glDrawArrays(GL_TRIANGLES, 0, count);
     glDisableVertexAttribArray(attrib->position);
     glDisableVertexAttribArray(attrib->uv);
@@ -337,9 +337,9 @@ void draw_triangles_3d(Attrib *attrib, GLuint buffer, int count) {
     glVertexAttribPointer(attrib->position, 3, GL_FLOAT, GL_FALSE,
                           sizeof(GLfloat) * 8, 0);
     glVertexAttribPointer(attrib->normal, 3, GL_FLOAT, GL_FALSE,
-                          sizeof(GLfloat) * 8, (GLvoid *)(sizeof(GLfloat) * 3));
+                          sizeof(GLfloat) * 8, (GLvoid *) (sizeof(GLfloat) * 3));
     glVertexAttribPointer(attrib->uv, 2, GL_FLOAT, GL_FALSE,
-                          sizeof(GLfloat) * 8, (GLvoid *)(sizeof(GLfloat) * 6));
+                          sizeof(GLfloat) * 8, (GLvoid *) (sizeof(GLfloat) * 6));
     glDrawArrays(GL_TRIANGLES, 0, count);
     glDisableVertexAttribArray(attrib->position);
     glDisableVertexAttribArray(attrib->normal);
@@ -354,7 +354,7 @@ void draw_triangles_2d(Attrib *attrib, GLuint buffer, int count) {
     glVertexAttribPointer(attrib->position, 2, GL_FLOAT, GL_FALSE,
                           sizeof(GLfloat) * 4, 0);
     glVertexAttribPointer(attrib->uv, 2, GL_FLOAT, GL_FALSE,
-                          sizeof(GLfloat) * 4, (GLvoid *)(sizeof(GLfloat) * 2));
+                          sizeof(GLfloat) * 4, (GLvoid *) (sizeof(GLfloat) * 2));
     glDrawArrays(GL_TRIANGLES, 0, count);
     glDisableVertexAttribArray(attrib->position);
     glDisableVertexAttribArray(attrib->uv);
@@ -423,13 +423,16 @@ Player *find_player(int id) {
 }
 
 void update_player(Player *player,
-                   float x, float y, float z, float rx, float ry, int interpolate)
-{
+                   float x, float y, float z, float rx, float ry, int interpolate) {
     if (interpolate) {
         State *s1 = &player->state1;
         State *s2 = &player->state2;
         memcpy(s1, s2, sizeof(State));
-        s2->x = x; s2->y = y; s2->z = z; s2->rx = rx; s2->ry = ry;
+        s2->x = x;
+        s2->y = y;
+        s2->z = z;
+        s2->rx = rx;
+        s2->ry = ry;
         s2->t = glfwGetTime();
         if (s2->rx - s1->rx > PI) {
             s1->rx += 2 * PI;
@@ -437,10 +440,13 @@ void update_player(Player *player,
         if (s1->rx - s2->rx > PI) {
             s1->rx -= 2 * PI;
         }
-    }
-    else {
+    } else {
         State *s = &player->state;
-        s->x = x; s->y = y; s->z = z; s->rx = rx; s->ry = ry;
+        s->x = x;
+        s->y = y;
+        s->z = z;
+        s->rx = rx;
+        s->ry = ry;
         Util::Utility::del_buffer(player->buffer);
         player->buffer = gen_player_buffer(s->x, s->y, s->z, s->rx, s->ry);
     }
@@ -499,9 +505,13 @@ float player_crosshair_distance(Player *p1, Player *p2) {
     float d = player_player_distance(p1, p2);
     float vx, vy, vz;
     get_sight_vector(s1->rx, s1->ry, &vx, &vy, &vz);
-    vx *= d; vy *= d; vz *= d;
+    vx *= d;
+    vy *= d;
+    vz *= d;
     float px, py, pz;
-    px = s1->x + vx; py = s1->y + vy; pz = s1->z + vz;
+    px = s1->x + vx;
+    py = s1->y + vy;
+    pz = s1->z + vz;
     float x = s2->x - px;
     float y = s2->y - py;
     float z = s2->z - pz;
@@ -571,8 +581,7 @@ int chunk_visible(float planes[6][4], int p, int q, int miny, int maxy) {
                     planes[i][3];
             if (d < 0) {
                 out++;
-            }
-            else {
+            } else {
                 in++;
             }
             if (in && out) {
@@ -595,11 +604,12 @@ int highest_block(float x, float z) {
     Chunk *chunk = find_chunk(p, q);
     if (chunk) {
         Map *map = &chunk->map;
-        MAP_FOR_EACH(map, ex, ey, ez, ew) {
-            if (Entity::Item::is_obstacle(ew) && ex == nx && ez == nz) {
-                result = MAX(result, ey);
-            }
-        } END_MAP_FOR_EACH;
+        MAP_FOR_EACH(map, ex, ey, ez, ew)
+            {
+                if (Entity::Item::is_obstacle(ew) && ex == nx && ez == nz) {
+                    result = MAX(result, ey);
+                }
+            }END_MAP_FOR_EACH;
     }
     return result;
 }
@@ -608,8 +618,7 @@ int _hit_test(
         Map *map, float max_distance, int previous,
         float x, float y, float z,
         float vx, float vy, float vz,
-        int *hx, int *hy, int *hz)
-{
+        int *hx, int *hy, int *hz) {
     int m = 32;
     int px = 0;
     int py = 0;
@@ -622,24 +631,30 @@ int _hit_test(
             int hw = Scene::WorldMap::map_get(map, nx, ny, nz);
             if (hw > 0) {
                 if (previous) {
-                    *hx = px; *hy = py; *hz = pz;
-                }
-                else {
-                    *hx = nx; *hy = ny; *hz = nz;
+                    *hx = px;
+                    *hy = py;
+                    *hz = pz;
+                } else {
+                    *hx = nx;
+                    *hy = ny;
+                    *hz = nz;
                 }
                 return hw;
             }
-            px = nx; py = ny; pz = nz;
+            px = nx;
+            py = ny;
+            pz = nz;
         }
-        x += vx / m; y += vy / m; z += vz / m;
+        x += vx / m;
+        y += vy / m;
+        z += vz / m;
     }
     return 0;
 }
 
 int hit_test(
         int previous, float x, float y, float z, float rx, float ry,
-        int *bx, int *by, int *bz)
-{
+        int *bx, int *by, int *bz) {
     int result = 0;
     float best = 0;
     int p = chunked(x);
@@ -659,7 +674,9 @@ int hit_test(
                     powf(hx - x, 2) + powf(hy - y, 2) + powf(hz - z, 2));
             if (best == 0 || d < best) {
                 best = d;
-                *bx = hx; *by = hy; *bz = hz;
+                *bx = hx;
+                *by = hy;
+                *bz = hz;
                 result = hw;
             }
         }
@@ -677,16 +694,20 @@ int hit_test_face(Player *player, int *x, int *y, int *z, int *face) {
         int dy = hy - *y;
         int dz = hz - *z;
         if (dx == -1 && dy == 0 && dz == 0) {
-            *face = 0; return 1;
+            *face = 0;
+            return 1;
         }
         if (dx == 1 && dy == 0 && dz == 0) {
-            *face = 1; return 1;
+            *face = 1;
+            return 1;
         }
         if (dx == 0 && dy == 0 && dz == -1) {
-            *face = 2; return 1;
+            *face = 2;
+            return 1;
         }
         if (dx == 0 && dy == 0 && dz == 1) {
-            *face = 3; return 1;
+            *face = 3;
+            return 1;
         }
         if (dx == 0 && dy == 1 && dz == 0) {
             int degrees = roundf(DEGREES(atan2f(s->x - hx, s->z - hz)));
@@ -694,7 +715,8 @@ int hit_test_face(Player *player, int *x, int *y, int *z, int *face) {
                 degrees += 360;
             }
             int top = ((degrees + 45) / 90) % 4;
-            *face = 4 + top; return 1;
+            *face = 4 + top;
+            return 1;
         }
     }
     return 0;
@@ -744,8 +766,7 @@ int collide(int height, float *x, float *y, float *z) {
 int player_intersects_block(
         int height,
         float x, float y, float z,
-        int hx, int hy, int hz)
-{
+        int hx, int hy, int hz) {
     int nx = roundf(x);
     int ny = roundf(y);
     int nz = roundf(z);
@@ -758,8 +779,7 @@ int player_intersects_block(
 }
 
 int _gen_sign_buffer(
-        GLfloat *data, float x, float y, float z, int face, const char *text)
-{
+        GLfloat *data, float x, float y, float z, int face, const char *text) {
     static const int glyph_dx[8] = {0, 0, -1, 1, 1, 0, -1, 0};
     static const int glyph_dz[8] = {1, -1, 0, 0, 0, -1, 0, 1};
     static const int line_dx[8] = {0, 0, 0, 0, 0, 1, 0, -1};
@@ -882,23 +902,22 @@ void dirty_chunk(Chunk *chunk) {
 
 void occlusion(
         char neighbors[27], char lights[27], float shades[27],
-        float ao[6][4], float light[6][4])
-{
+        float ao[6][4], float light[6][4]) {
     static const int lookup3[6][4][3] = {
-            {{0, 1, 3}, {2, 1, 5}, {6, 3, 7}, {8, 5, 7}},
+            {{0,  1,  3},  {2,  1,  5},  {6,  3,  7},  {8,  5,  7}},
             {{18, 19, 21}, {20, 19, 23}, {24, 21, 25}, {26, 23, 25}},
-            {{6, 7, 15}, {8, 7, 17}, {24, 15, 25}, {26, 17, 25}},
-            {{0, 1, 9}, {2, 1, 11}, {18, 9, 19}, {20, 11, 19}},
-            {{0, 3, 9}, {6, 3, 15}, {18, 9, 21}, {24, 15, 21}},
-            {{2, 5, 11}, {8, 5, 17}, {20, 11, 23}, {26, 17, 23}}
+            {{6,  7,  15}, {8,  7,  17}, {24, 15, 25}, {26, 17, 25}},
+            {{0,  1,  9},  {2,  1,  11}, {18, 9,  19}, {20, 11, 19}},
+            {{0,  3,  9},  {6,  3,  15}, {18, 9,  21}, {24, 15, 21}},
+            {{2,  5,  11}, {8,  5,  17}, {20, 11, 23}, {26, 17, 23}}
     };
     static const int lookup4[6][4][4] = {
-            {{0, 1, 3, 4}, {1, 2, 4, 5}, {3, 4, 6, 7}, {4, 5, 7, 8}},
+            {{0,  1,  3,  4},  {1,  2,  4,  5},  {3,  4,  6,  7},  {4,  5,  7,  8}},
             {{18, 19, 21, 22}, {19, 20, 22, 23}, {21, 22, 24, 25}, {22, 23, 25, 26}},
-            {{6, 7, 15, 16}, {7, 8, 16, 17}, {15, 16, 24, 25}, {16, 17, 25, 26}},
-            {{0, 1, 9, 10}, {1, 2, 10, 11}, {9, 10, 18, 19}, {10, 11, 19, 20}},
-            {{0, 3, 9, 12}, {3, 6, 12, 15}, {9, 12, 18, 21}, {12, 15, 21, 24}},
-            {{2, 5, 11, 14}, {5, 8, 14, 17}, {11, 14, 20, 23}, {14, 17, 23, 26}}
+            {{6,  7,  15, 16}, {7,  8,  16, 17}, {15, 16, 24, 25}, {16, 17, 25, 26}},
+            {{0,  1,  9,  10}, {1,  2,  10, 11}, {9,  10, 18, 19}, {10, 11, 19, 20}},
+            {{0,  3,  9,  12}, {3,  6,  12, 15}, {9,  12, 18, 21}, {12, 15, 21, 24}},
+            {{2,  5,  11, 14}, {5,  8,  14, 17}, {11, 14, 20, 23}, {14, 17, 23, 26}}
     };
     static const float curve[4] = {0.0, 0.25, 0.5, 0.75};
     for (int i = 0; i < 6; i++) {
@@ -933,8 +952,7 @@ void occlusion(
 
 void light_fill(
         char *opaque, char *light,
-        int x, int y, int z, int w, int force)
-{
+        int x, int y, int z, int w, int force) {
     if (x + w < XZ_LO || z + w < XZ_LO) {
         return;
     }
@@ -960,9 +978,9 @@ void light_fill(
 }
 
 void compute_chunk(WorkerItem *item) {
-    char *opaque = (char *)calloc(XZ_SIZE * XZ_SIZE * Y_SIZE, sizeof(char));
-    char *light = (char *)calloc(XZ_SIZE * XZ_SIZE * Y_SIZE, sizeof(char));
-    char *highest = (char *)calloc(XZ_SIZE * XZ_SIZE, sizeof(char));
+    char *opaque = (char *) calloc(XZ_SIZE * XZ_SIZE * Y_SIZE, sizeof(char));
+    char *light = (char *) calloc(XZ_SIZE * XZ_SIZE * Y_SIZE, sizeof(char));
+    char *highest = (char *) calloc(XZ_SIZE * XZ_SIZE, sizeof(char));
 
     int ox = item->p * CHUNK_SIZE - CHUNK_SIZE - 1;
     int oy = -1;
@@ -988,24 +1006,25 @@ void compute_chunk(WorkerItem *item) {
             if (!map) {
                 continue;
             }
-            MAP_FOR_EACH(map, ex, ey, ez, ew) {
-                int x = ex - ox;
-                int y = ey - oy;
-                int z = ez - oz;
-                int w = ew;
-                // TODO: this should be unnecessary
-                if (x < 0 || y < 0 || z < 0) {
-                    continue;
-                }
-                if (x >= XZ_SIZE || y >= Y_SIZE || z >= XZ_SIZE) {
-                    continue;
-                }
-                // END TODO
-                opaque[XYZ(x, y, z)] = !Entity::Item::is_transparent(w);
-                if (opaque[XYZ(x, y, z)]) {
-                    highest[XZ(x, z)] = MAX(highest[XZ(x, z)], y);
-                }
-            } END_MAP_FOR_EACH;
+            MAP_FOR_EACH(map, ex, ey, ez, ew)
+                {
+                    int x = ex - ox;
+                    int y = ey - oy;
+                    int z = ez - oz;
+                    int w = ew;
+                    // TODO: this should be unnecessary
+                    if (x < 0 || y < 0 || z < 0) {
+                        continue;
+                    }
+                    if (x >= XZ_SIZE || y >= Y_SIZE || z >= XZ_SIZE) {
+                        continue;
+                    }
+                    // END TODO
+                    opaque[XYZ(x, y, z)] = !Entity::Item::is_transparent(w);
+                    if (opaque[XYZ(x, y, z)]) {
+                        highest[XZ(x, z)] = MAX(highest[XZ(x, z)], y);
+                    }
+                }END_MAP_FOR_EACH;
         }
     }
 
@@ -1017,12 +1036,13 @@ void compute_chunk(WorkerItem *item) {
                 if (!map) {
                     continue;
                 }
-                MAP_FOR_EACH(map, ex, ey, ez, ew) {
-                    int x = ex - ox;
-                    int y = ey - oy;
-                    int z = ez - oz;
-                    light_fill(opaque, light, x, y, z, ew, 1);
-                } END_MAP_FOR_EACH;
+                MAP_FOR_EACH(map, ex, ey, ez, ew)
+                    {
+                        int x = ex - ox;
+                        int y = ey - oy;
+                        int z = ez - oz;
+                        light_fill(opaque, light, x, y, z, ew, 1);
+                    }END_MAP_FOR_EACH;
             }
         }
     }
@@ -1033,104 +1053,107 @@ void compute_chunk(WorkerItem *item) {
     int miny = 256;
     int maxy = 0;
     int faces = 0;
-    MAP_FOR_EACH(map, ex, ey, ez, ew) {
-        if (ew <= 0) {
-            continue;
-        }
-        int x = ex - ox;
-        int y = ey - oy;
-        int z = ez - oz;
-        int f1 = !opaque[XYZ(x - 1, y, z)];
-        int f2 = !opaque[XYZ(x + 1, y, z)];
-        int f3 = !opaque[XYZ(x, y + 1, z)];
-        int f4 = !opaque[XYZ(x, y - 1, z)] && (ey > 0);
-        int f5 = !opaque[XYZ(x, y, z - 1)];
-        int f6 = !opaque[XYZ(x, y, z + 1)];
-        int total = f1 + f2 + f3 + f4 + f5 + f6;
-        if (total == 0) {
-            continue;
-        }
-        if (Entity::Item::is_plant(ew)) {
-            total = 4;
-        }
-        miny = MIN(miny, ey);
-        maxy = MAX(maxy, ey);
-        faces += total;
-    } END_MAP_FOR_EACH;
+    MAP_FOR_EACH(map, ex, ey, ez, ew)
+        {
+            if (ew <= 0) {
+                continue;
+            }
+            int x = ex - ox;
+            int y = ey - oy;
+            int z = ez - oz;
+            int f1 = !opaque[XYZ(x - 1, y, z)];
+            int f2 = !opaque[XYZ(x + 1, y, z)];
+            int f3 = !opaque[XYZ(x, y + 1, z)];
+            int f4 = !opaque[XYZ(x, y - 1, z)] && (ey > 0);
+            int f5 = !opaque[XYZ(x, y, z - 1)];
+            int f6 = !opaque[XYZ(x, y, z + 1)];
+            int total = f1 + f2 + f3 + f4 + f5 + f6;
+            if (total == 0) {
+                continue;
+            }
+            if (Entity::Item::is_plant(ew)) {
+                total = 4;
+            }
+            miny = MIN(miny, ey);
+            maxy = MAX(maxy, ey);
+            faces += total;
+        }END_MAP_FOR_EACH;
 
     // generate geometry
     GLfloat *data = Util::Utility::malloc_faces(10, faces);
     int offset = 0;
-    MAP_FOR_EACH(map, ex, ey, ez, ew) {
-        if (ew <= 0) {
-            continue;
-        }
-        int x = ex - ox;
-        int y = ey - oy;
-        int z = ez - oz;
-        int f1 = !opaque[XYZ(x - 1, y, z)];
-        int f2 = !opaque[XYZ(x + 1, y, z)];
-        int f3 = !opaque[XYZ(x, y + 1, z)];
-        int f4 = !opaque[XYZ(x, y - 1, z)] && (ey > 0);
-        int f5 = !opaque[XYZ(x, y, z - 1)];
-        int f6 = !opaque[XYZ(x, y, z + 1)];
-        int total = f1 + f2 + f3 + f4 + f5 + f6;
-        if (total == 0) {
-            continue;
-        }
-        char neighbors[27] = {0};
-        char lights[27] = {0};
-        float shades[27] = {0};
-        int index = 0;
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
-                for (int dz = -1; dz <= 1; dz++) {
-                    neighbors[index] = opaque[XYZ(x + dx, y + dy, z + dz)];
-                    lights[index] = light[XYZ(x + dx, y + dy, z + dz)];
-                    shades[index] = 0;
-                    if (y + dy <= highest[XZ(x + dx, z + dz)]) {
-                        for (int oy = 0; oy < 8; oy++) {
-                            if (opaque[XYZ(x + dx, y + dy + oy, z + dz)]) {
-                                shades[index] = 1.0 - oy * 0.125;
-                                break;
+    MAP_FOR_EACH(map, ex, ey, ez, ew)
+        {
+            if (ew <= 0) {
+                continue;
+            }
+            int x = ex - ox;
+            int y = ey - oy;
+            int z = ez - oz;
+            int f1 = !opaque[XYZ(x - 1, y, z)];
+            int f2 = !opaque[XYZ(x + 1, y, z)];
+            int f3 = !opaque[XYZ(x, y + 1, z)];
+            int f4 = !opaque[XYZ(x, y - 1, z)] && (ey > 0);
+            int f5 = !opaque[XYZ(x, y, z - 1)];
+            int f6 = !opaque[XYZ(x, y, z + 1)];
+            int total = f1 + f2 + f3 + f4 + f5 + f6;
+            if (total == 0) {
+                continue;
+            }
+            char neighbors[27] = {0};
+            char lights[27] = {0};
+            float shades[27] = {0};
+            int index = 0;
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    for (int dz = -1; dz <= 1; dz++) {
+                        neighbors[index] = opaque[XYZ(x + dx, y + dy, z + dz)];
+                        lights[index] = light[XYZ(x + dx, y + dy, z + dz)];
+                        shades[index] = 0;
+                        if (y + dy <= highest[XZ(x + dx, z + dz)]) {
+                            for (int oy = 0; oy < 8; oy++) {
+                                if (opaque[XYZ(x + dx, y + dy + oy, z + dz)]) {
+                                    shades[index] = 1.0 - oy * 0.125;
+                                    break;
+                                }
                             }
                         }
+                        index++;
                     }
-                    index++;
                 }
             }
-        }
-        float ao[6][4];
-        float light[6][4];
-        occlusion(neighbors, lights, shades, ao, light);
-        if (Entity::Item::is_plant(ew)) {
-            total = 4;
-            float min_ao = 1;
-            float max_light = 0;
-            for (int a = 0; a < 6; a++) {
-                for (int b = 0; b < 4; b++) {
-                    min_ao = MIN(min_ao, ao[a][b]);
-                    max_light = MAX(max_light, light[a][b]);
+            float ao[6][4];
+            float light[6][4];
+            occlusion(neighbors, lights, shades, ao, light);
+            if (Entity::Item::is_plant(ew)) {
+                total = 4;
+                float min_ao = 1;
+                float max_light = 0;
+                for (int a = 0; a < 6; a++) {
+                    for (int b = 0; b < 4; b++) {
+                        min_ao = MIN(min_ao, ao[a][b]);
+                        max_light = MAX(max_light, light[a][b]);
+                    }
                 }
+                float rotation = simplex2(ex, ez, 4, 0.5, 2) * 360;
+                Entity::Cube::make_plant(
+                        data + offset, min_ao, max_light,
+                        ex, ey, ez, 0.5, ew, rotation);
+            } else {
+                Entity::Cube::make_cube(
+                        data + offset, ao, light,
+                        f1, f2, f3, f4, f5, f6,
+                        ex, ey, ez, 0.5, ew);
             }
-            float rotation = simplex2(ex, ez, 4, 0.5, 2) * 360;
-            Entity::Cube::make_plant(
-                    data + offset, min_ao, max_light,
-                    ex, ey, ez, 0.5, ew, rotation);
-        }
-        else {
-            Entity::Cube::make_cube(
-                    data + offset, ao, light,
-                    f1, f2, f3, f4, f5, f6,
-                    ex, ey, ez, 0.5, ew);
-        }
-        offset += total * 60;
-    } END_MAP_FOR_EACH;
+            offset += total * 60;
+        }END_MAP_FOR_EACH;
 
-    free(opaque);
-    free(light);
-    free(highest);
-
+//    free(opaque);
+//    free(light);
+//    free(highest);
+    delete opaque;
+    delete light;
+    delete highest;
     item->miny = miny;
     item->maxy = maxy;
     item->faces = faces;
@@ -1160,8 +1183,7 @@ void gen_chunk_buffer(Chunk *chunk) {
             if (other) {
                 item->block_maps[dp + 1][dq + 1] = &other->map;
                 item->light_maps[dp + 1][dq + 1] = &other->lights;
-            }
-            else {
+            } else {
                 item->block_maps[dp + 1][dq + 1] = 0;
                 item->light_maps[dp + 1][dq + 1] = 0;
             }
@@ -1173,7 +1195,7 @@ void gen_chunk_buffer(Chunk *chunk) {
 }
 
 void map_set_func(int x, int y, int z, int w, void *arg) {
-    Map *map = (Map *)arg;
+    Map *map = (Map *) arg;
     Scene::WorldMap::map_set(map, x, y, z, w);
 }
 
@@ -1294,11 +1316,13 @@ void check_workers() {
                     Map *light_map = item->light_maps[a][b];
                     if (block_map) {
                         Scene::WorldMap::map_free(block_map);
-                        free(block_map);
+//                        free(block_map);
+                        delete block_map;
                     }
                     if (light_map) {
                         Scene::WorldMap::map_free(light_map);
-                        free(light_map);
+//                        free(light_map);
+                        delete light_map;
                     }
                 }
             }
@@ -1322,8 +1346,7 @@ void force_chunks(Player *player) {
                 if (chunk->dirty) {
                     gen_chunk_buffer(chunk);
                 }
-            }
-            else if (g->chunk_count < MAX_CHUNKS) {
+            } else if (g->chunk_count < MAX_CHUNKS) {
                 chunk = g->chunks + g->chunk_count++;
                 create_chunk(chunk, a, b);
                 gen_chunk_buffer(chunk);
@@ -1385,8 +1408,7 @@ void ensure_chunks_worker(Player *player, Worker *worker) {
         if (g->chunk_count < MAX_CHUNKS) {
             chunk = g->chunks + g->chunk_count++;
             init_chunk(chunk, a, b);
-        }
-        else {
+        } else {
             return;
         }
     }
@@ -1401,14 +1423,15 @@ void ensure_chunks_worker(Player *player, Worker *worker) {
                 other = find_chunk(chunk->p + dp, chunk->q + dq);
             }
             if (other) {
-                Map *block_map = static_cast<Map *>(malloc(sizeof(Map)));
+//                Map *block_map = static_cast<Map *>(malloc(sizeof(Map)));
+                Map *block_map = new Map;
                 Scene::WorldMap::map_copy(block_map, &other->map);
-                Map *light_map = static_cast<Map *>(malloc(sizeof(Map)));
+//                Map *light_map = static_cast<Map *>(malloc(sizeof(Map)));
+                Map *light_map = new Map;
                 Scene::WorldMap::map_copy(light_map, &other->lights);
                 item->block_maps[dp + 1][dq + 1] = block_map;
                 item->light_maps[dp + 1][dq + 1] = light_map;
-            }
-            else {
+            } else {
                 item->block_maps[dp + 1][dq + 1] = 0;
                 item->light_maps[dp + 1][dq + 1] = 0;
             }
@@ -1433,7 +1456,7 @@ void ensure_chunks(Player *player) {
 }
 
 int worker_run(void *arg) {
-    Worker *worker = (Worker *)arg;
+    Worker *worker = (Worker *) arg;
     int running = 1;
     while (running) {
         mtx_lock(&worker->mtx);
@@ -1463,8 +1486,7 @@ void unset_sign(int x, int y, int z) {
             chunk->dirty = 1;
             DAO::DataBase::db_delete_signs(x, y, z);
         }
-    }
-    else {
+    } else {
         DAO::DataBase::db_delete_signs(x, y, z);
     }
 }
@@ -1479,15 +1501,13 @@ void unset_sign_face(int x, int y, int z, int face) {
             chunk->dirty = 1;
             DAO::DataBase::db_delete_sign(x, y, z, face);
         }
-    }
-    else {
+    } else {
         DAO::DataBase::db_delete_sign(x, y, z, face);
     }
 }
 
 void _set_sign(
-        int p, int q, int x, int y, int z, int face, const char *text, int dirty)
-{
+        int p, int q, int x, int y, int z, int face, const char *text, int dirty) {
     if (strlen(text) == 0) {
         unset_sign_face(x, y, z, face);
         return;
@@ -1532,8 +1552,7 @@ void set_light(int p, int q, int x, int y, int z, int w) {
             dirty_chunk(chunk);
             DAO::DataBase::db_insert_light(p, q, x, y, z, w);
         }
-    }
-    else {
+    } else {
         DAO::DataBase::db_insert_light(p, q, x, y, z, w);
     }
 }
@@ -1548,8 +1567,7 @@ void _set_block(int p, int q, int x, int y, int z, int w, int dirty) {
             }
             DAO::DataBase::db_insert_block(p, q, x, y, z, w);
         }
-    }
-    else {
+    } else {
         DAO::DataBase::db_insert_block(p, q, x, y, z, w);
     }
     if (w == 0 && chunked(x) == p && chunked(z) == q) {
@@ -1638,8 +1656,7 @@ int render_chunks(Attrib *attrib, Player *player) {
             continue;
         }
         if (!chunk_visible(
-                planes, chunk->p, chunk->q, chunk->miny, chunk->maxy))
-        {
+                planes, chunk->p, chunk->q, chunk->miny, chunk->maxy)) {
             continue;
         }
         draw_chunk(attrib, chunk);
@@ -1668,8 +1685,7 @@ void render_signs(Attrib *attrib, Player *player) {
             continue;
         }
         if (!chunk_visible(
-                planes, chunk->p, chunk->q, chunk->miny, chunk->maxy))
-        {
+                planes, chunk->p, chunk->q, chunk->miny, chunk->maxy)) {
             continue;
         }
         draw_signs(attrib, chunk);
@@ -1781,8 +1797,7 @@ void render_item(Attrib *attrib) {
         GLuint buffer = gen_plant_buffer(0, 0, 0, 0.5, w);
         draw_plant(attrib, buffer);
         Util::Utility::del_buffer(buffer);
-    }
-    else {
+    } else {
         GLuint buffer = gen_cube_buffer(0, 0, 0, 0.5, w);
         draw_cube(attrib, buffer);
         Util::Utility::del_buffer(buffer);
@@ -1790,8 +1805,7 @@ void render_item(Attrib *attrib) {
 }
 
 void render_text(
-        Attrib *attrib, int justify, float x, float y, float n, char *text)
-{
+        Attrib *attrib, int justify, float x, float y, float n, char *text) {
     float matrix[16];
     Graphic::Matrix::set_matrix_2d(matrix, g->width, g->height);
     glUseProgram(attrib->program);
@@ -1819,17 +1833,14 @@ void login() {
     if (DAO::DataBase::db_auth_get_selected(username, 128, identity_token, 128)) {
         printf("Contacting login server for username: %s\n", username);
         if (User::Auth::get_access_token(
-                access_token, 128, username, identity_token))
-        {
+                access_token, 128, username, identity_token)) {
             printf("Successfully authenticated with the login server\n");
             Controller::Client::client_login(username, access_token);
-        }
-        else {
+        } else {
             printf("Failed to authenticate with the login server\n");
             Controller::Client::client_login("", "");
         }
-    }
-    else {
+    } else {
         printf("Logging in anonymously\n");
         Controller::Client::client_login("", "");
     }
@@ -1919,12 +1930,12 @@ void sphere(Block *center, int radius, int fill, int fx, int fy, int fz) {
     static const float offsets[8][3] = {
             {-0.5, -0.5, -0.5},
             {-0.5, -0.5, 0.5},
-            {-0.5, 0.5, -0.5},
-            {-0.5, 0.5, 0.5},
-            {0.5, -0.5, -0.5},
-            {0.5, -0.5, 0.5},
-            {0.5, 0.5, -0.5},
-            {0.5, 0.5, 0.5}
+            {-0.5, 0.5,  -0.5},
+            {-0.5, 0.5,  0.5},
+            {0.5,  -0.5, -0.5},
+            {0.5,  -0.5, 0.5},
+            {0.5,  0.5,  -0.5},
+            {0.5,  0.5,  0.5}
     };
     int cx = center->x;
     int cy = center->y;
@@ -1951,8 +1962,7 @@ void sphere(Block *center, int radius, int fill, int fx, int fy, int fz) {
                     float d = sqrtf(dx * dx + dy * dy + dz * dz);
                     if (d < radius) {
                         inside = 1;
-                    }
-                    else {
+                    } else {
                         outside = 1;
                     }
                 }
@@ -2033,101 +2043,74 @@ void parse_command(const char *buffer, int forward) {
         DAO::DataBase::db_auth_set(username, token);
         add_message("Successfully imported identity token!");
         login();
-    }
-    else if (strcmp(buffer, "/logout") == 0) {
+    } else if (strcmp(buffer, "/logout") == 0) {
         DAO::DataBase::db_auth_select_none();
         login();
-    }
-    else if (sscanf(buffer, "/login %128s", username) == 1) {
+    } else if (sscanf(buffer, "/login %128s", username) == 1) {
         if (DAO::DataBase::db_auth_select(username)) {
             login();
-        }
-        else {
+        } else {
             add_message("Unknown username.");
         }
-    }
-    else if (sscanf(buffer,
-                    "/online %128s %d", server_addr, &server_port) >= 1)
-    {
+    } else if (sscanf(buffer,
+                      "/online %128s %d", server_addr, &server_port) >= 1) {
         g->mode_changed = 1;
         g->mode = MODE_ONLINE;
         strncpy(g->server_addr, server_addr, MAX_ADDR_LENGTH);
         g->server_port = server_port;
         snprintf(g->db_path, MAX_PATH_LENGTH,
                  "cache.%s.%d.db", g->server_addr, g->server_port);
-    }
-    else if (sscanf(buffer, "/offline %128s", filename) == 1) {
+    } else if (sscanf(buffer, "/offline %128s", filename) == 1) {
         g->mode_changed = 1;
         g->mode = MODE_OFFLINE;
         snprintf(g->db_path, MAX_PATH_LENGTH, "%s.db", filename);
-    }
-    else if (strcmp(buffer, "/offline") == 0) {
+    } else if (strcmp(buffer, "/offline") == 0) {
         g->mode_changed = 1;
         g->mode = MODE_OFFLINE;
         snprintf(g->db_path, MAX_PATH_LENGTH, "%s", DB_PATH);
-    }
-    else if (sscanf(buffer, "/view %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/view %d", &radius) == 1) {
         if (radius >= 1 && radius <= 24) {
             g->create_radius = radius;
             g->render_radius = radius;
             g->delete_radius = radius + 4;
-        }
-        else {
+        } else {
             add_message("Viewing distance must be between 1 and 24.");
         }
-    }
-    else if (strcmp(buffer, "/copy") == 0) {
+    } else if (strcmp(buffer, "/copy") == 0) {
         copy();
-    }
-    else if (strcmp(buffer, "/paste") == 0) {
+    } else if (strcmp(buffer, "/paste") == 0) {
         paste();
-    }
-    else if (strcmp(buffer, "/tree") == 0) {
+    } else if (strcmp(buffer, "/tree") == 0) {
         tree(&g->block0);
-    }
-    else if (sscanf(buffer, "/array %d %d %d", &xc, &yc, &zc) == 3) {
+    } else if (sscanf(buffer, "/array %d %d %d", &xc, &yc, &zc) == 3) {
         array(&g->block1, &g->block0, xc, yc, zc);
-    }
-    else if (sscanf(buffer, "/array %d", &count) == 1) {
+    } else if (sscanf(buffer, "/array %d", &count) == 1) {
         array(&g->block1, &g->block0, count, count, count);
-    }
-    else if (strcmp(buffer, "/fcube") == 0) {
+    } else if (strcmp(buffer, "/fcube") == 0) {
         cube(&g->block0, &g->block1, 1);
-    }
-    else if (strcmp(buffer, "/cube") == 0) {
+    } else if (strcmp(buffer, "/cube") == 0) {
         cube(&g->block0, &g->block1, 0);
-    }
-    else if (sscanf(buffer, "/fsphere %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/fsphere %d", &radius) == 1) {
         sphere(&g->block0, radius, 1, 0, 0, 0);
-    }
-    else if (sscanf(buffer, "/sphere %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/sphere %d", &radius) == 1) {
         sphere(&g->block0, radius, 0, 0, 0, 0);
-    }
-    else if (sscanf(buffer, "/fcirclex %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/fcirclex %d", &radius) == 1) {
         sphere(&g->block0, radius, 1, 1, 0, 0);
-    }
-    else if (sscanf(buffer, "/circlex %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/circlex %d", &radius) == 1) {
         sphere(&g->block0, radius, 0, 1, 0, 0);
-    }
-    else if (sscanf(buffer, "/fcircley %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/fcircley %d", &radius) == 1) {
         sphere(&g->block0, radius, 1, 0, 1, 0);
-    }
-    else if (sscanf(buffer, "/circley %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/circley %d", &radius) == 1) {
         sphere(&g->block0, radius, 0, 0, 1, 0);
-    }
-    else if (sscanf(buffer, "/fcirclez %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/fcirclez %d", &radius) == 1) {
         sphere(&g->block0, radius, 1, 0, 0, 1);
-    }
-    else if (sscanf(buffer, "/circlez %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/circlez %d", &radius) == 1) {
         sphere(&g->block0, radius, 0, 0, 0, 1);
-    }
-    else if (sscanf(buffer, "/fcylinder %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/fcylinder %d", &radius) == 1) {
         cylinder(&g->block0, &g->block1, radius, 1);
-    }
-    else if (sscanf(buffer, "/cylinder %d", &radius) == 1) {
+    } else if (sscanf(buffer, "/cylinder %d", &radius) == 1) {
         cylinder(&g->block0, &g->block1, radius, 0);
-    }
-    else if (forward) {
+    } else if (forward) {
         Controller::Client::client_talk(buffer);
     }
 }
@@ -2199,8 +2182,7 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_ESCAPE) {
         if (g->typing) {
             g->typing = 0;
-        }
-        else if (exclusive) {
+        } else if (exclusive) {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         }
     }
@@ -2212,8 +2194,7 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                     g->typing_buffer[n] = '\r';
                     g->typing_buffer[n + 1] = '\0';
                 }
-            }
-            else {
+            } else {
                 g->typing = 0;
                 if (g->typing_buffer[0] == CRAFT_KEY_SIGN) {
                     Player *player = g->players;
@@ -2221,20 +2202,16 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                     if (hit_test_face(player, &x, &y, &z, &face)) {
                         set_sign(x, y, z, face, g->typing_buffer + 1);
                     }
-                }
-                else if (g->typing_buffer[0] == '/') {
+                } else if (g->typing_buffer[0] == '/') {
                     parse_command(g->typing_buffer, 1);
-                }
-                else {
+                } else {
                     Controller::Client::client_talk(g->typing_buffer);
                 }
             }
-        }
-        else {
+        } else {
             if (control) {
                 on_right_click();
-            }
-            else {
+            } else {
                 on_left_click();
             }
         }
@@ -2245,8 +2222,7 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
             g->suppress_char = 1;
             strncat(g->typing_buffer, buffer,
                     MAX_TEXT_LENGTH - strlen(g->typing_buffer) - 1);
-        }
-        else {
+        } else {
             parse_command(buffer, 0);
         }
     }
@@ -2285,15 +2261,14 @@ void on_char(GLFWwindow *window, unsigned int u) {
     }
     if (g->typing) {
         if (u >= 32 && u < 128) {
-            char c = (char)u;
+            char c = (char) u;
             int n = strlen(g->typing_buffer);
             if (n < MAX_TEXT_LENGTH - 1) {
                 g->typing_buffer[n] = c;
                 g->typing_buffer[n + 1] = '\0';
             }
         }
-    }
-    else {
+    } else {
         if (u == CRAFT_KEY_CHAT) {
             g->typing = 1;
             g->typing_buffer[0] = '\0';
@@ -2338,12 +2313,10 @@ void on_mouse_button(GLFWwindow *window, int button, int action, int mods) {
         if (exclusive) {
             if (control) {
                 on_right_click();
-            }
-            else {
+            } else {
                 on_left_click();
             }
-        }
-        else {
+        } else {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
     }
@@ -2351,8 +2324,7 @@ void on_mouse_button(GLFWwindow *window, int button, int action, int mods) {
         if (exclusive) {
             if (control) {
                 on_light();
-            }
-            else {
+            } else {
                 on_right_click();
             }
         }
@@ -2392,22 +2364,20 @@ void handle_mouse_input() {
         s->rx += (mx - px) * m;
         if (INVERT_MOUSE) {
             s->ry += (my - py) * m;
-        }
-        else {
+        } else {
             s->ry -= (my - py) * m;
         }
         if (s->rx < 0) {
             s->rx += RADIANS(360);
         }
-        if (s->rx >= RADIANS(360)){
+        if (s->rx >= RADIANS(360)) {
             s->rx -= RADIANS(360);
         }
         s->ry = MAX(s->ry, -RADIANS(90));
         s->ry = MIN(s->ry, RADIANS(90));
         px = mx;
         py = my;
-    }
-    else {
+    } else {
         glfwGetCursorPos(g->window, &px, &py);
     }
 }
@@ -2436,8 +2406,7 @@ void handle_movement(double dt) {
         if (glfwGetKey(g->window, CRAFT_KEY_JUMP)) {
             if (g->flying) {
                 vy = 1;
-            }
-            else if (dy == 0) {
+            } else if (dy == 0) {
                 dy = 8;
             }
         }
@@ -2455,8 +2424,7 @@ void handle_movement(double dt) {
     for (int i = 0; i < step; i++) {
         if (g->flying) {
             dy = 0;
-        }
-        else {
+        } else {
             dy -= ut * 25;
             dy = MAX(dy, -250);
         }
@@ -2481,10 +2449,13 @@ void parse_buffer(char *buffer) {
         int pid;
         float ux, uy, uz, urx, ury;
         if (sscanf(line, "U,%d,%f,%f,%f,%f,%f",
-                   &pid, &ux, &uy, &uz, &urx, &ury) == 6)
-        {
+                   &pid, &ux, &uy, &uz, &urx, &ury) == 6) {
             me->id = pid;
-            s->x = ux; s->y = uy; s->z = uz; s->rx = urx; s->ry = ury;
+            s->x = ux;
+            s->y = uy;
+            s->z = uz;
+            s->rx = urx;
+            s->ry = ury;
             force_chunks(me);
             if (uy == 0) {
                 s->y = highest_block(s->x, s->z) + 2;
@@ -2492,22 +2463,19 @@ void parse_buffer(char *buffer) {
         }
         int bp, bq, bx, by, bz, bw;
         if (sscanf(line, "B,%d,%d,%d,%d,%d,%d",
-                   &bp, &bq, &bx, &by, &bz, &bw) == 6)
-        {
+                   &bp, &bq, &bx, &by, &bz, &bw) == 6) {
             _set_block(bp, bq, bx, by, bz, bw, 0);
             if (player_intersects_block(2, s->x, s->y, s->z, bx, by, bz)) {
                 s->y = highest_block(s->x, s->z) + 2;
             }
         }
         if (sscanf(line, "L,%d,%d,%d,%d,%d,%d",
-                   &bp, &bq, &bx, &by, &bz, &bw) == 6)
-        {
+                   &bp, &bq, &bx, &by, &bz, &bw) == 6) {
             set_light(bp, bq, bx, by, bz, bw);
         }
         float px, py, pz, prx, pry;
         if (sscanf(line, "P,%d,%f,%f,%f,%f,%f",
-                   &pid, &px, &py, &pz, &prx, &pry) == 6)
-        {
+                   &pid, &px, &py, &pz, &prx, &pry) == 6) {
             Player *player = find_player(pid);
             if (!player && g->player_count < MAX_PLAYERS) {
                 player = g->players + g->player_count;
@@ -2561,8 +2529,7 @@ void parse_buffer(char *buffer) {
         int face;
         char text[MAX_SIGN_LENGTH] = {0};
         if (sscanf(line, format,
-                   &bp, &bq, &bx, &by, &bz, &face, text) >= 6)
-        {
+                   &bp, &bq, &bx, &by, &bz, &face, text) >= 6) {
             _set_sign(bp, bq, bx, by, bz, face, text, 0);
         }
         line = Util::Utility::tokenize(NULL, "\n", &key);
@@ -2709,8 +2676,7 @@ int main(int argc, char **argv) {
         g->server_port = argc == 3 ? atoi(argv[2]) : DEFAULT_PORT;
         snprintf(g->db_path, MAX_PATH_LENGTH,
                  "cache.%s.%d.db", g->server_addr, g->server_port);
-    }
-    else {
+    } else {
         g->mode = MODE_OFFLINE;
         snprintf(g->db_path, MAX_PATH_LENGTH, "%s", DB_PATH);
     }
@@ -2807,7 +2773,8 @@ int main(int argc, char **argv) {
             char *buffer = Controller::Client::client_recv();
             if (buffer) {
                 parse_buffer(buffer);
-                free(buffer);
+//                free(buffer);
+                delete buffer;
             }
 
             // FLUSH DATABASE //

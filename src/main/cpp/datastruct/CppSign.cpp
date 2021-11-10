@@ -19,14 +19,16 @@ void DataStruct::CppSign::sign_list_alloc(SignList *list, int capacity) {
 }
 
 void DataStruct::CppSign::sign_list_free(SignList *list) {
-    free(list->data);
+//    free(list->data);
+    delete list->data;
 }
 
 void DataStruct::CppSign::sign_list_grow(SignList *list) {
     SignList new_list;
     sign_list_alloc(&new_list, list->capacity * 2);
     memcpy(new_list.data, list->data, list->size * sizeof(Sign));
-    free(list->data);
+//    free(list->data);
+    delete list->data;
     list->capacity = new_list.capacity;
     list->data = new_list.data;
 }

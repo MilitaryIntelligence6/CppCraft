@@ -21,7 +21,8 @@ void Entity::CppRing::ring_alloc(Ring *ring, int capacity) {
 }
 
 void Entity::CppRing::ring_free(Ring *ring) {
-    free(ring->data);
+//    free(ring->data);
+    delete ring->data;
 }
 
 int Entity::CppRing::ring_empty(Ring *ring) {
@@ -48,7 +49,8 @@ void Entity::CppRing::ring_grow(Ring *ring) {
     while (ring_get(ring, &entry)) {
         ring_put(&new_ring, &entry);
     }
-    free(ring->data);
+//    free(ring->data);
+    delete ring->data;
     ring->capacity = new_ring.capacity;
     ring->start = new_ring.start;
     ring->end = new_ring.end;

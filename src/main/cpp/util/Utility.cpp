@@ -35,7 +35,8 @@ char *load_file(const char *path) {
     fseek(file, 0, SEEK_END);
     int length = ftell(file);
     rewind(file);
-    char *data = static_cast<char *>(calloc(length + 1, sizeof(char)));
+//    char *data = static_cast<char *>(calloc(length + 1, sizeof(char)));
+    char *data = new char[length + 1];
     fread(data, 1, length, file);
     fclose(file);
     return data;
@@ -55,13 +56,15 @@ void Util::Utility::del_buffer(GLuint buffer) {
 }
 
 GLfloat *Util::Utility::malloc_faces(int components, int faces) {
-    return static_cast<GLfloat *>(malloc(sizeof(GLfloat) * 6 * components * faces));
+//    return static_cast<GLfloat *>(malloc(sizeof(GLfloat) * 6 * components * faces));
+    return new GLfloat[6 * components * faces];
 }
 
 GLuint Util::Utility::gen_faces(int components, int faces, GLfloat *data) {
     GLuint buffer = gen_buffer(
             sizeof(GLfloat) * 6 * components * faces, data);
-    free(data);
+//    free(data);
+    delete data;
     return buffer;
 }
 
@@ -74,10 +77,12 @@ GLuint Util::Utility::make_shader(GLenum type, const char *source) {
     if (status == GL_FALSE) {
         GLint length;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
-        GLchar *info = static_cast<GLchar *>(calloc(length, sizeof(GLchar)));
+//        GLchar *info = static_cast<GLchar *>(calloc(length, sizeof(GLchar)));
+        GLchar *info = new GLchar[length];
         glGetShaderInfoLog(shader, length, NULL, info);
         fprintf(stderr, "glCompileShader failed:\n%s\n", info);
-        free(info);
+//        free(info);
+        delete[] info;
     }
     return shader;
 }
@@ -85,7 +90,8 @@ GLuint Util::Utility::make_shader(GLenum type, const char *source) {
 GLuint Util::Utility::load_shader(GLenum type, const char *path) {
     char *data = load_file(path);
     GLuint result = make_shader(type, data);
-    free(data);
+//    free(data);
+    delete data;
     return result;
 }
 
@@ -99,10 +105,12 @@ GLuint Util::Utility::make_program(GLuint shader1, GLuint shader2) {
     if (status == GL_FALSE) {
         GLint length;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
-        GLchar *info = static_cast<GLchar *>(calloc(length, sizeof(GLchar)));
+//        GLchar *info = static_cast<GLchar *>(calloc(length, sizeof(GLchar)));
+        GLchar *info = new GLchar[length];
         glGetProgramInfoLog(program, length, NULL, info);
         fprintf(stderr, "glLinkProgram failed: %s\n", info);
-        free(info);
+//        free(info);
+        delete[] info;
     }
     glDetachShader(program, shader1);
     glDetachShader(program, shader2);
@@ -128,7 +136,8 @@ void flip_image_vertical(
         memcpy(new_data + j * stride, data + i * stride, stride);
     }
     memcpy(data, new_data, size);
-    free(new_data);
+//    free(new_data);
+    delete new_data;
 }
 
 void Util::Utility::load_png_texture(const char *file_name) {
@@ -143,17 +152,18 @@ void Util::Utility::load_png_texture(const char *file_name) {
     flip_image_vertical(data, width, height);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
                  GL_UNSIGNED_BYTE, data);
-    free(data);
+//    free(data);
+    delete data;
 }
 
 char *Util::Utility::tokenize(char *str, const char *delim, char **key) {
     char *result;
-    if (str == NULL) {
+    if (str == nullptr) {
         str = *key;
     }
     str += strspn(str, delim);
     if (*str == '\0') {
-        return NULL;
+        return nullptr;
     }
     result = str;
     str += strcspn(str, delim);
@@ -217,6 +227,7 @@ int Util::Utility::wrap(const char *input, int max_width, char *output, int max_
         strncat(output, "\n", max_length - strlen(output) - 1);
         line = tokenize(NULL, "\r\n", &key1);
     }
-    free(text);
+//    free(text);
+    delete text;
     return line_number;
 }
